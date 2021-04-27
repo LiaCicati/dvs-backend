@@ -1,6 +1,5 @@
 const Applicant = require('../models/applicant');
 const BadRequestError = require('../errors/BadRequestError');
-const ConflictError = require('../errors/ConflictError');
 
 const addData = (req, res, next) => {
   const {
@@ -15,13 +14,7 @@ const addData = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((err) => {
-      if (err.code === 11000) {
-        next(new ConflictError('A user with this email is already registered in the database'));
-      } else {
-        next(err);
-      }
-    });
+    .catch(next);
 };
 
 module.exports = {

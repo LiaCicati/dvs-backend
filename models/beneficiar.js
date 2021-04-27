@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
+const today = Date.now();
+
 const beneficiarSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
     validate: {
       validator(email) {
         return validator.isEmail(email);
@@ -35,9 +36,19 @@ const beneficiarSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 30,
   },
+  companyName: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 120,
+  },
   additionalData: {
     type: String,
     minlength: 2,
+  },
+  requestSentAt: {
+    type: String,
+    default: new Date(today).toLocaleString(),
   },
 });
 
